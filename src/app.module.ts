@@ -40,9 +40,9 @@ import { TargetModule } from './target/target.module';
         database: configService.get<string>('DB_NAME'),
         entities:["src/**/**.entity{.ts,.js}"],
         synchronize: false,
-        // ssl: {
-        //   rejectUnauthorized: false,
-        // }
+        ssl: {
+          rejectUnauthorized: false,
+        }
       }),
       inject: [ConfigService],
     }),
