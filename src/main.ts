@@ -10,7 +10,7 @@ async function bootstrap() {
   //     .build());
   app.enableCors();
   // SwaggerModule.setup('docs', app, document);
-  await app.listen(3000, '0.0.0.0', function() {
+  await app.listen(3000, function() {
     console.log('Listening to port: ' + 3000);
   });
 }
