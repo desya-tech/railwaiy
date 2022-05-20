@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+<h2>Hey {{ firstname }} {{lastname}}</h2>
+
+<table>
+  <tr>
+    <th>Company</th>
+    <th>Username</th>
+    <th>Password</th>
+  </tr>
+  <tr>
+    <td> {{ company }}</td>
+    <td>{{ email }}</td>
+    <td>{{ email }}</td>
+  </tr>
+</table>
+<p>Please click below to login Virtus Platform</p> <a href="{{ url }}">Login Virtus Platform</a>
+</body>
+</html>
