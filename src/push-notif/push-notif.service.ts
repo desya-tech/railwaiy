@@ -45,6 +45,67 @@ export class PushNotifService {
         tokenall.forEach(element => {
             Promise.all([ admin.messaging().sendToDevice(element.TOKEN,message)])
         });
+        const webpush = require('web-push');
+
+        const vapidKeys = {
+        publicKey: 'BNQ-0td9CVUw_TJDaQV7Mby86U4hFs-t5pI2D7CHfvNZQtkDkOiBab21aWtfrdLlMF6q-iylrRoDHCf7dNLJxzk',
+        privateKey: 'rvHRMZqyTkVuybEDmBb5G8kPEZAarPHOpe6YoWVLSi0'
+        };
+
+        // get client subscription config from db
+        const subscription = {
+            endpoint: 'https://fcm.googleapis.com/fcm/send/c5lAYn1CBDs:APA91bHIZt5X6YHiR8rj_nueH3Ce02NpCvH4l_ClnzpK1bT3VA45E0fRP1oKyavCMdsyMtq9CJ19kpl4We0l9qc6N1EICf-2UKgtT0O7_V5M_2ekDfiRi6snnpuiOgwLle4KPGTDjY5G',
+            expirationTime: null,
+            keys: {
+                auth: 'LHAXouIKimXDBwJIX9Jgnw',
+                p256dh: 'BFbKBEALs5YBsNklL7NyJKvl526I5eILOG4WEuNLib7YQVHvkx_Sof4lwqmrgp4gR1cb541jHyLFHA_8kz8BDxs',
+            },
+        };
+
+        const payload = {
+            notification: {
+                title: 'Title',
+                body: 'This is my body',
+                // icon: 'assets/icons/icon-384x384.png',
+                actions: [
+                    { action: 'bar', title: 'Focus last' },
+                    { action: 'baz', title: 'Navigate last' },
+                ],
+                data: {
+                    onActionClick: {
+                        default: { operation: 'openWindow' },
+                        bar: {
+                            operation: 'focusLastFocusedOrOpen',
+                            url: '/signin',
+                        },
+                        baz: {
+                            operation: 'navigateLastFocusedOrOpen',
+                            url: '/signin',
+                        },
+                    },
+                },
+            },
+        };
+
+        const options = {
+            vapidDetails: {
+                subject: 'mailto:example_email@example.com',
+                publicKey: vapidKeys.publicKey,
+                privateKey: vapidKeys.privateKey,
+            },
+            TTL: 60,
+        };
+
+        // send notification
+        webpush.sendNotification(subscription, JSON.stringify(payload), options)
+            .then((_) => {
+                console.log('SENT!!!');
+                console.log(_);
+            })
+            .catch((_) => {
+                console.log(_);
+            });
+
     }
 
     async createtoken(token: NotifTokenEntity) {
